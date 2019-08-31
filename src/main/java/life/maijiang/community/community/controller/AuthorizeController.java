@@ -7,15 +7,20 @@ import org.hibernate.validator.constraints.pl.REGON;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
 
 @Controller
 public class AuthorizeController {
     @Autowired
     private GithubProvider githubProvider;
-    @GetMapping("/callback")
+    @RequestMapping("/callback")
     public  String callback(@RequestParam(name="code") String code,
-                            @RequestParam(name = "state") String state){
+                            @RequestParam(name = "state") String state,
+                            HttpServletRequest request){
         AccessTokenDTO accessTokenDTO = new AccessTokenDTO();
         accessTokenDTO.setCode(code);
         accessTokenDTO.setClient_id("f8ab6eb4b048a8260e31");
@@ -24,7 +29,15 @@ public class AuthorizeController {
         accessTokenDTO.setRedrect_uri("http://localhost:8887/callback");
         String accessToken = githubProvider.getAccessToken(accessTokenDTO);
         GithubUser user = githubProvider.getuser(accessToken);
-        System.out.println(user.getName());
-        return "index";
+//        System.out.println(user.getName());
+        if(user != null){
+//            登录成功 写cookie和session
+            request.getSession().setAttribute("user",user);
+            return "redirect:/";
+        }else{
+//            登录失败
+            System.out.println("登录失败");
+            return "rediret:/";
+        }
     }
 }
