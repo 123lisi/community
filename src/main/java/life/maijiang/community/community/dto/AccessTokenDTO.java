@@ -1,5 +1,8 @@
 package life.maijiang.community.community.dto;
 
+import lombok.Data;
+
+@Data
 public class AccessTokenDTO {
     private String client_id;
     private String client_secret;
@@ -7,43 +10,4 @@ public class AccessTokenDTO {
     private String redrect_uri;
     private String state;
 
-    public String getState() {
-        return state;
-    }
-
-    public void setState(String state) {
-        this.state = state;
-    }
-
-    public String getRedrect_uri() {
-        return redrect_uri;
-    }
-
-    public void setRedrect_uri(String redrect_uri) {
-        this.redrect_uri = redrect_uri;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public String getClient_secret() {
-        return client_secret;
-    }
-
-    public void setClient_secret(String client_secret) {
-        this.client_secret = client_secret;
-    }
-
-    public String getClient_id() {
-        return client_id;
-    }
-
-    public void setClient_id(String client_id) {
-        this.client_id = client_id;
-    }
 }

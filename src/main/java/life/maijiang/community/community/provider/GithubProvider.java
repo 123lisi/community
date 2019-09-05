@@ -9,14 +9,11 @@ import okhttp3.OkHttpClient;
 import okhttp3.RequestBody;
 import okhttp3.Request;
 import okhttp3.Response;
-import okhttp3.*;
 import java.io.IOException;
 
 @Component
 public class GithubProvider {
     public String getAccessToken(AccessTokenDTO accessTokenDTO){
-
-
         MediaType mediaType= MediaType.get("application/json; charset=utf-8");
         OkHttpClient client = new OkHttpClient();
         RequestBody body = RequestBody.create(mediaType,JSON.toJSONString(accessTokenDTO));
@@ -26,6 +23,7 @@ public class GithubProvider {
                 .build();
         try (Response response = client.newCall(request).execute()) {
             String string = response.body().string();
+            System.out.println("accessToken::"+string);
            String token = string.split("&")[0].split("=")[1];
 
             return token;
@@ -44,8 +42,6 @@ public class GithubProvider {
 
             String string = response.body().string();
             GithubUser githubUser = JSON.parseObject(string, GithubUser.class);
-
-
             return githubUser;
         } catch (IOException e) {
             return null;
