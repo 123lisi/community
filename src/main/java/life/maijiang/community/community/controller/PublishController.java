@@ -1,7 +1,6 @@
 package life.maijiang.community.community.controller;
 
 import life.maijiang.community.community.mapper.QuestionMapper;
-import life.maijiang.community.community.mapper.UserMapper;
 import life.maijiang.community.community.model.Question;
 import life.maijiang.community.community.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,52 +15,45 @@ import javax.servlet.http.HttpServletRequest;
 
 @Controller
 public class PublishController {
-    @Autowired
-    private UserMapper userMapper;
+
     @Autowired
     private QuestionMapper questionMapper;
-    @GetMapping("/publish")
-    public String publish(){ return "publish"; }
-    @PostMapping("/publish")
-    public String doPublish(
-            @RequestParam(value = "title",required = false) String title,
-            @RequestParam(value = "description",required = false) String description,
-            @RequestParam(value = "tag",required = false) String tag,
-            HttpServletRequest request,
-            Model model){
-        model.addAttribute("title",title);
-        model.addAttribute("description",description);
-        model.addAttribute("tag",tag);
-        if (title ==null || title == ""){
-            model.addAttribute("error","标题不能为空");
-            return "publish";
-        }
-        if (description ==null || description == ""){
-            model.addAttribute("error","描述不能为空");
-            return "publish";
-        }
-        if (tag ==null || tag == ""){
-            model.addAttribute("error","标签不能为空");
-            return "publish";
-        }
-        User user = null;
-        Cookie[] cookies = request.getCookies();
-        if(cookies != null){
-            for (Cookie cookie:cookies){
-                if (cookie.getName().equals("token")){
-                    String token = cookie.getValue();
-                    user = userMapper.findByToken(token);
-                    if (user != null){
-                        request.getSession().setAttribute("user",user);
-                    }
-                    break;
-                }
-            }
 
+    //    跳转页面的方法get
+    @GetMapping("/publish")
+    public String publish() {
+        return "publish";
+    }
+
+    //    跳转页面的方法POST
+    @PostMapping("/publish")
+//    设置请求的参数
+    public String doPublish(
+            @RequestParam(value = "title", required = false) String title,
+            @RequestParam(value = "description", required = false) String description,
+            @RequestParam(value = "tag", required = false) String tag,
+            HttpServletRequest request,
+            Model model) {
+//        用于页面接受数据的Model
+        model.addAttribute("title", title);
+        model.addAttribute("description", description);
+        model.addAttribute("tag", tag);
+        if (title == null || title == "") {
+            model.addAttribute("error", "标题不能为空");
+            return "publish";
         }
-        if (user == null){
+        if (description == null || description == "") {
+            model.addAttribute("error", "描述不能为空");
+            return "publish";
+        }
+        if (tag == null || tag == "") {
+            model.addAttribute("error", "标签不能为空");
+            return "publish";
+        }
+        User user = (User) request.getSession().getAttribute("user");
+        if (user == null) {
 //            System.out.println(title);
-            model.addAttribute("error","用户未登录");
+            model.addAttribute("error", "用户未登录");
             return "publish";
         }
         Question question = new Question();
@@ -69,8 +61,8 @@ public class PublishController {
         question.setDescription(description);
         question.setTag(tag);
         question.setCreator(user.getId());
-        question.setGmt_create(System.currentTimeMillis());
-        question.setGmt_modified(question.getGmt_create());
+        question.setGmtCreate(System.currentTimeMillis());
+        question.setGmtModified(question.getGmtCreate());
         questionMapper.create(question);
         return "publish";
     }
