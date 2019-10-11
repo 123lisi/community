@@ -2,6 +2,8 @@ package life.maijiang.community.community.service;
 
 import life.maijiang.community.community.dto.PaginationDTO;
 import life.maijiang.community.community.dto.QuestionDTO;
+import life.maijiang.community.community.exception.CustomizeErrorCode;
+import life.maijiang.community.community.exception.CustomizeException;
 import life.maijiang.community.community.mapper.QuestionMapper;
 import life.maijiang.community.community.mapper.UserMapper;
 import life.maijiang.community.community.model.Question;
@@ -117,10 +119,32 @@ public class QuestionService {
 
     public QuestionDTO getById(Integer id) {
         Question question =  questionMapper.getById(id);
+        if (question == null){
+            throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
+        }
         QuestionDTO questionDTO = new QuestionDTO();
         BeanUtils.copyProperties(question,questionDTO);
         User user = userMapper.findById(question.getCreator());
         questionDTO.setUser(user);
         return questionDTO;
+    }
+
+    public void createOrUpdate(Question question) {
+        if (question.getId() == null){
+            // 创建
+            question.setGmtCreate(System.currentTimeMillis());
+            question.setGmtModified(question.getGmtCreate());
+            questionMapper.create(question);
+        }else {
+            //更新
+            questionMapper.update(question);
+        }
+    }
+
+    public void incView(Integer id) {
+        Question question = questionMapper.getById(id);
+        Integer updatequestion =    question.getViewCount();
+        questionMapper.incView(updatequestion +1,id);
+
     }
 }
