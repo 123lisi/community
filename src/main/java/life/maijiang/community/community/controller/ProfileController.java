@@ -3,6 +3,7 @@ package life.maijiang.community.community.controller;
 import life.maijiang.community.community.dto.PaginationDTO;
 import life.maijiang.community.community.mapper.UserMapper;
 import life.maijiang.community.community.model.User;
+import life.maijiang.community.community.service.NotificationService;
 import life.maijiang.community.community.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,28 +21,30 @@ public class ProfileController {
     private UserMapper userMapper;
     @Autowired
     private QuestionService questionService;
+    @Autowired
+    private NotificationService notificationService;
 
     @GetMapping("/profile/{action}")
     public String profile(HttpServletRequest request,
                           @PathVariable(name = "action") String action,
                           @RequestParam(name = "page", defaultValue = "1") Integer page,
                           @RequestParam(name = "size", defaultValue = "5") Integer size,
-                          Model model){
-       User user = (User) request.getSession().getAttribute("user");
-        if (user == null){
+                          Model model) {
+        User user = (User) request.getSession().getAttribute("user");
+        if (user == null) {
             return "redict:/";
         }
-        if ("questions".equals(action)){
-            model.addAttribute("section","questions");
-            model.addAttribute("sectionName","我的提问");
-        }else if ("replies".equals(action)){
-            model.addAttribute("section","replies");
-            model.addAttribute("sectionName","我的最新回复");
+        if ("questions".equals(action)) {
+            model.addAttribute("section", "questions");
+            model.addAttribute("sectionName", "我的提问");
+            PaginationDTO paginationDTO = questionService.list(user.getId(), page, size);
+            model.addAttribute("pagination", paginationDTO);
+        } else if ("replies".equals(action)) {
+            PaginationDTO paginationDTO = notificationService.list(user.getId(),page,size);
+            model.addAttribute("section", "replies");
+            model.addAttribute("sectionName", "我的最新回复");
+            model.addAttribute("pagination", paginationDTO);
         }
-//        System.out.println("user.getId()"+user.getId());
-        PaginationDTO paginationDTO = questionService.list(user.getId(), page, size);
-//        System.out.println(paginationDTO);
-        model.addAttribute("pagination",paginationDTO );
         return "profile";
     }
 }

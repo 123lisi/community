@@ -36,7 +36,7 @@ public class AuthorizeController {
     public String callback(@RequestParam(name = "code") String code,
                            @RequestParam(name = "state") String state,
                            HttpServletRequest request,
-                           HttpServletResponse respons) {
+                           HttpServletResponse response) {
         AccessTokenDTO accessTokenDTO = new AccessTokenDTO();
         accessTokenDTO.setCode(code);
         accessTokenDTO.setClient_id("f8ab6eb4b048a8260e31");
@@ -48,13 +48,13 @@ public class AuthorizeController {
         if (githubUser != null) {
             User user = new User();
             user.setName(githubUser.getName());
-            user.setAccount(String.valueOf(githubUser.getId()));
+            user.setAccuntId(String.valueOf(githubUser.getId()));
             String token = UUID.randomUUID().toString();
             user.setToken(token);
             user.setAvatarUrl(githubUser.getAvatarUrl());
             userService.createOrUpdate(user);
 //            把token写入cookie里面用于验证
-            respons.addCookie(new Cookie("token", token));
+            response.addCookie(new Cookie("token", token));
             //            登录成功 写cookie和session
             request.getSession().setAttribute("user", githubUser);
             return "redirect:/";
@@ -64,11 +64,12 @@ public class AuthorizeController {
             return "redirect:/";
         }
     }
+
     @GetMapping("/logout")
     public String logout(HttpServletRequest request,
-                         HttpServletResponse response){
+                         HttpServletResponse response) {
         request.getSession().removeAttribute("user");
-        Cookie cookie = new Cookie("token",null) ;
+        Cookie cookie = new Cookie("token", null);
         cookie.setMaxAge(0);
         response.addCookie(cookie);
         return "redirect:/";

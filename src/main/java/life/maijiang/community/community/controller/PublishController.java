@@ -1,10 +1,12 @@
 package life.maijiang.community.community.controller;
 
+import life.maijiang.community.community.cache.TagCache;
 import life.maijiang.community.community.dto.QuestionDTO;
 import life.maijiang.community.community.mapper.QuestionMapper;
 import life.maijiang.community.community.model.Question;
 import life.maijiang.community.community.model.User;
 import life.maijiang.community.community.service.QuestionService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,20 +23,24 @@ public class PublishController {
 
     @Autowired
     private QuestionService questionService;
+
     //跳转编辑页面
     @GetMapping("/publish/{id}")
-    public String edit(@PathVariable(name = "id") Integer id,
-                       Model model){
+    public String edit(@PathVariable(name = "id") Long id,
+                       Model model) {
         QuestionDTO question = questionService.getById(id);
         model.addAttribute("title", question.getTitle());
         model.addAttribute("description", question.getDescription());
         model.addAttribute("tag", question.getTag());
-        model.addAttribute("id",question.getId());
+        model.addAttribute("id", question.getId());
+        model.addAttribute("tags", TagCache.get());
         return "publish";
     }
+
     //    跳转页面的方法get
     @GetMapping("/publish")
-    public String publish() {
+    public String publish(Model model) {
+        model.addAttribute("tags", TagCache.get());
         return "publish";
     }
 
@@ -45,13 +51,14 @@ public class PublishController {
             @RequestParam(value = "title", required = false) String title,
             @RequestParam(value = "description", required = false) String description,
             @RequestParam(value = "tag", required = false) String tag,
-            @RequestParam(value = "id",required = false) Integer id,
+            @RequestParam(value = "id", required = false) Long id,
             HttpServletRequest request,
             Model model) {
 //        用于页面接受数据的Model
         model.addAttribute("title", title);
         model.addAttribute("description", description);
         model.addAttribute("tag", tag);
+        model.addAttribute("tags", TagCache.get());
         if (title == null || title == "") {
             model.addAttribute("error", "标题不能为空");
             return "publish";
@@ -62,6 +69,11 @@ public class PublishController {
         }
         if (tag == null || tag == "") {
             model.addAttribute("error", "标签不能为空");
+            return "publish";
+        }
+        String valid = TagCache.isValid(tag);
+        if (!StringUtils.isBlank(valid)) {
+            model.addAttribute("error","标签不合法" + valid);
             return "publish";
         }
         User user = (User) request.getSession().getAttribute("user");
@@ -78,6 +90,7 @@ public class PublishController {
         question.setId(id);
 //        questionMapper.create(question);
         questionService.createOrUpdate(question);
-        return "publish";
+        return "redirect:/";
+
     }
 }

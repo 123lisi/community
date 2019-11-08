@@ -2,68 +2,178 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>麻将社区</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/bootstrap-theme.min.css">
     <link rel="stylesheet" href="/css/community.css">
     <script src="/js/jquery-3.4.1.min.js"></script>
     <script src="/js/bootstrap.min.js" type="application/javascript"></script>
+    <script src="/js/editormd.min.js" type="application/javascript"></script>
+    <script src="/js/lib/marked.min.js" type="application/javascript"></script>
+    <script src="/js/lib/prettify.min.js" type="application/javascript"></script>
 </head>
+<script type="application/javascript">
+    window.onload = function (ev) {
+        var closable = window.localStorage.getItem("closable");
+        if (closable == "isclose") {
+            window.close();
+            window.localStorage.removeItem("closable");
+        }
+
+    }
+</script>
 <body>
 <div th:insert="~{navigation :: nav}"></div>
 <div class="container-fluid main">
     <div class="row">
-        <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9" >
+        <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
             <h2><span class="glyphicon glyphicon-list" aria-hidden="true"></span> 发现</h2>
             <hr>
-            <div class="media" th:each="question : ${pagination.questions}">
+            <div class="media" th:each="question : ${pagination.data}">
                 <div class="media-left">
                     <a href="#" th:switch="${question.user.avatarUrl != null}">
-                        <img class="media-object img-circle" th:src="${question.user.avatarUrl}"   alt="用户头像">
+                        <img class="media-object img-circle" th:src="${question.user.avatarUrl}" alt="用户头像">
                     </a>
                 </div>
                 <div class="media-body">
-                    <h4 class="media-heading" >
-                    <a th:href="@{'/question/' + ${question.id}}" th:text="${question.title}"></a>
+                    <h4 class="media-heading">
+                        <a th:href="@{'/question/' + ${question.id}}" th:text="${question.title}"></a>
                     </h4>
-                    <span th:text="${question.description}"></span><br>
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 question-view" th:id="${'question'+question.id}">
+                        <textarea style="display:none;" th:text="${question.description}"></textarea>
+                    </div>
                     <span class="text_desc">
-                       <span th:text="${question.commentCount}"></span>个回复 · <span th:text="${question.viewCount}"></span>次浏览 · <span th:text="${#dates.format(question.gmtCreate,'yyyy-MM-dd HH:mm:ss')}"></span>
+                       <span th:text="${question.commentCount}"></span>个回复 · <span
+                            th:text="${question.viewCount}"></span>次浏览 · <span
+                            th:text="${#dates.format(question.gmtCreate,'yyyy-MM-dd HH:mm:ss')}"></span>
                     </span>
                 </div>
             </div>
             <nav aria-label="Page navigation">
                 <ul class="pagination">
                     <li th:if="${pagination.showFirstPage}">
-                        <a th:href="@{/(page = 1)}" aria-label="Previous">
+                        <a th:if="${search == null}" th:href="@{/(page = 1)}" aria-label="Previous">
+                            <span aria-hidden="true">&lt;&lt;</span>
+                        </a>
+                        <a th:if="${search != null}" th:href="@{/(page = 1,search=${search})}" aria-label="Previous">
                             <span aria-hidden="true">&lt;&lt;</span>
                         </a>
                     </li>
                     <li th:if="${pagination.showPrevious}">
-                        <a th:href="@{/(page = ${pagination.page - 1})}" aria-label="Previous">
+                        <a th:if="${search == null}" th:href="@{/(page = ${pagination.page - 1})}" aria-label="Previous">
+                            <span aria-hidden="true">&lt;</span>
+                        </a>
+                        <a th:if="${search != null}" th:href="@{/(page = ${pagination.page - 1},search=${search})}" aria-label="Previous">
                             <span aria-hidden="true">&lt;</span>
                         </a>
                     </li>
                     <li th:each="page : ${pagination.pages}" th:class="${pagination.page == page}? 'active':''">
-                        <a th:href="@{/(page=${page})}" th:text="${page}"></a>
+                        <a th:if="${search == null}" th:href="@{/(page=${page})}" th:text="${page}"></a>
+                    </li>
+                    <li th:each="page : ${pagination.pages}" th:class="${pagination.page == page}? 'active':''">
+                        <a th:if="${search != null}" th:href="@{/(page=${page},search=${search})}" th:text="${page}"></a>
                     </li>
                     <li th:if="${pagination.showNext}">
-                        <a th:href="@{/(page = ${pagination.page +1})}" aria-label="Previous">
+                        <a th:if="${search == null}" th:href="@{/(page = ${pagination.page +1})}" aria-label="Previous">
+                            <span aria-hidden="true">&gt;</span>
+                        </a>
+                        <a  th:if="${search != null}" th:href="@{/(page = ${pagination.page +1},search=${search})}" aria-label="Previous">
                             <span aria-hidden="true">&gt;</span>
                         </a>
                     </li>
                     <li th:if="${pagination.showEndPage}">
-                        <a th:href="@{/(page = ${pagination.totalPage})}" aria-label="Previous">
+                        <a th:if="${search != null}" th:href="@{/(page = ${pagination.totalPage})}" aria-label="Previous">
+                            <span aria-hidden="true">&gt;&gt;</span>
+                        </a>
+                        <a th:if="${search != null}" th:href="@{/(page = ${pagination.totalPage},search=${search})}" aria-label="Previous">
                             <span aria-hidden="true">&gt;&gt;</span>
                         </a>
                     </li>
                 </ul>
             </nav>
         </div>
-        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3" >
+        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
             <h3>热门话题</h3>
         </div>
     </div>
 </div>
 </body>
+<!--粒子线条特效-->
+<canvas id="c_n12" width="1829" height="585"
+        style="position: fixed; top: 0px; left: 0px; z-index: -1; opacity: 1;"></canvas>
+<script>
+    !function () {
+        function o(w, v, i) {
+            return w.getAttribute(v) || i
+        }
+
+        function j(i) {
+            return document.getElementsByTagName(i)
+        }
+
+        function l() {
+            var i = j("script"), w = i.length, v = i[w - 1];
+            return {
+                l: w,
+                z: o(v, "zIndex", -1),
+                o: o(v, "opacity", 1.5),
+                c: o(v, "color", "125,100,100"),
+                n: o(v, "count", 199)
+            }
+        }
+
+        function k() {
+            r = u.width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth, n = u.height = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight
+        }
+
+        function b() {
+            e.clearRect(0, 0, r, n);
+            var w = [f].concat(t);
+            var x, v, A, B, z, y;
+            t.forEach(function (i) {
+                i.x += i.xa, i.y += i.ya, i.xa *= i.x > r || i.x < 0 ? -1 : 1, i.ya *= i.y > n || i.y < 0 ? -1 : 1, e.fillRect(i.x - 0.5, i.y - 0.5, 1, 1);
+                for (v = 0; v < w.length; v++) {
+                    x = w[v];
+                    if (i !== x && null !== x.x && null !== x.y) {
+                        B = i.x - x.x, z = i.y - x.y, y = B * B + z * z;
+                        y < x.max && (x === f && y >= x.max / 2 && (i.x -= 0.03 * B, i.y -= 0.03 * z), A = (x.max - y) / x.max, e.beginPath(), e.lineWidth = A / 2, e.strokeStyle = "rgba(" + s.c + "," + (A + 0.2) + ")", e.moveTo(i.x, i.y), e.lineTo(x.x, x.y), e.stroke())
+                    }
+                }
+                w.splice(w.indexOf(i), 1)
+            }), m(b)
+        }
+
+        var u = document.createElement("canvas"), s = l(), c = "c_n" + s.l, e = u.getContext("2d"), r, n,
+            m = window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || window.msRequestAnimationFrame || function (i) {
+                window.setTimeout(i, 1000 / 45)
+            }, a = Math.random, f = {x: null, y: null, max: 20000};
+        u.id = c;
+        u.style.cssText = "position:fixed;top:0;left:0;z-index:" + s.z + ";opacity:" + s.o;
+        j("body")[0].appendChild(u);
+        k(), window.onresize = k;
+        window.onmousemove = function (i) {
+            i = i || window.event, f.x = i.clientX, f.y = i.clientY
+        }, window.onmouseout = function () {
+            f.x = null, f.y = null
+        };
+        for (var t = [], p = 0; s.n > p; p++) {
+            var h = a() * r, g = a() * n, q = 2 * a() - 1, d = 2 * a() - 1;
+            t.push({x: h, y: g, xa: q, ya: d, max: 6000})
+        }
+        setTimeout(function () {
+            b()
+        }, 100)
+    }();
+
+</script>
+<script type="text/javascript">
+    $(function() {
+        var ids = $('.question-view');
+        for (var i=0;i<ids.length;i++) {
+            id = $('.question-view').eq(i).attr('id');
+            editormd.markdownToHTML(id, {});
+        }
+    });
+
+</script>
 </html>

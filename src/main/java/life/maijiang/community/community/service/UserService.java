@@ -2,8 +2,11 @@ package life.maijiang.community.community.service;
 
 import life.maijiang.community.community.mapper.UserMapper;
 import life.maijiang.community.community.model.User;
+import life.maijiang.community.community.model.UserExample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class UserService {
@@ -11,20 +14,32 @@ public class UserService {
     private UserMapper userMapper;
 
     public void createOrUpdate(User user) {
-        User dbuser = userMapper.findByAccountId(user.getAccount());
-        if (dbuser == null){
-              // 插入
+        UserExample userExample = new UserExample();
+        userExample.createCriteria()
+                .andAccuntIdEqualTo(user.getAccuntId());
+        List<User> users = userMapper.selectByExample(userExample);
+        if (users.size() == 0) {
+            // 插入
             user.setGmtCreate(System.currentTimeMillis());
             user.setGmtModified(user.getGmtCreate());
             userMapper.insert(user);
 
-        }else {
-            dbuser.setGmtCreate(System.currentTimeMillis());
-            dbuser.setAvatarUrl(user.getAvatarUrl());
-            dbuser.setName(user.getName());
-            dbuser.setToken(user.getToken());
-            userMapper.update(dbuser);
-              // 更新
+        } else {
+            // 更新
+            User dbuser = users.get(0);
+            User updateUser = new User();
+
+            updateUser.setGmtCreate(System.currentTimeMillis());
+            updateUser.setAvatarUrl(user.getAvatarUrl());
+            updateUser.setName(user.getName());
+            updateUser.setToken(user.getToken());
+            UserExample example = new UserExample();
+            example.createCriteria()
+                    .andIdEqualTo(dbuser.getId());
+            userMapper.updateByExampleSelective(updateUser, example);
+            //不是通过mybatis进行增加
+            //userMapper.update(dbuser);
+
         }
     }
 }

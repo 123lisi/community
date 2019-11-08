@@ -20,14 +20,17 @@ public class HelloController {
 
     @GetMapping("/")
     public String index(
-                        Model model,
-                        @RequestParam(name = "page", defaultValue = "1") Integer page,
-                        @RequestParam(name = "size", defaultValue = "5") Integer size) {
-
+            Model model,
+            @RequestParam(name = "page", defaultValue = "1") Integer page,
+            @RequestParam(name = "size", defaultValue = "5") Integer size,
+            @RequestParam(name = "search", required = false) String search) {
 //        创建PaginationDTO的对象并赋值为questionService中list的返回值
-        PaginationDTO pagination = questionService.list(page, size);
+        PaginationDTO pagination = questionService.list(search, page, size);
 //        使用spring中的Model类 设置传到页面上的值
         model.addAttribute("pagination", pagination);
+        if (search != "") {
+            model.addAttribute("search", search);
+        }
         return "index";
     }
 }
