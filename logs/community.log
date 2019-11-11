@@ -1,32 +1,51 @@
-2019-11-08 19:12:14.975 DEBUG 30440 --- [http-nio-8887-exec-1] l.m.c.c.m.UserMapper.selectByPrimaryKey  : <==      Total: 1
-2019-11-08 19:12:15.676 DEBUG 30440 --- [http-nio-8887-exec-1] l.m.c.c.m.UserMapper.selectByPrimaryKey  : ==>  Preparing: select id, accunt_id, name, token, gmt_create, gmt_modified, bio, avatar_url from user where id = ? 
-2019-11-08 19:12:15.678 DEBUG 30440 --- [http-nio-8887-exec-1] l.m.c.c.m.UserMapper.selectByPrimaryKey  : ==> Parameters: 24(Long)
-2019-11-08 19:12:15.684 DEBUG 30440 --- [http-nio-8887-exec-1] l.m.c.c.m.UserMapper.selectByPrimaryKey  : <==      Total: 1
-2019-11-08 19:17:48.322  INFO 30440 --- [Thread-6] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'applicationTaskExecutor'
-2019-11-08 19:17:48.328  INFO 30440 --- [Thread-6] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
-2019-11-08 19:17:48.361  INFO 30440 --- [Thread-6] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
-2019-11-08 19:17:48.467  INFO 30440 --- [Thread-6] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
-2019-11-08 19:17:57.350  INFO 30440 --- [restartedMain] l.m.c.community.CommunityApplication     : Starting CommunityApplication on PC-20190309UXKJ with PID 30440 (C:\Users\Administrator\IdeaProjects\community\target\classes started by Administrator in C:\Users\Administrator\IdeaProjects\community)
-2019-11-08 19:17:57.365  INFO 30440 --- [restartedMain] l.m.c.community.CommunityApplication     : No active profile set, falling back to default profiles: default
-2019-11-08 19:18:01.471  INFO 30440 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data repositories in DEFAULT mode.
-2019-11-08 19:18:01.696  INFO 30440 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 224ms. Found 0 repository interfaces.
-2019-11-08 19:18:02.362  INFO 30440 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
-2019-11-08 19:18:02.616  WARN 30440 --- [restartedMain] org.apache.tomcat.util.modeler.Registry  : The MBean registry cannot be disabled because it has already been initialised
-2019-11-08 19:18:03.064  INFO 30440 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8887 (http)
-2019-11-08 19:18:03.068  INFO 30440 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-2019-11-08 19:18:03.090  INFO 30440 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.22]
-2019-11-08 19:18:03.387  INFO 30440 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
-2019-11-08 19:18:03.388  INFO 30440 --- [restartedMain] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 5406 ms
-2019-11-08 19:18:03.870  INFO 30440 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Starting...
-2019-11-08 19:18:03.916  INFO 30440 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Start completed.
-2019-11-08 19:18:03.993  INFO 30440 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
-2019-11-08 19:18:04.114  INFO 30440 --- [restartedMain] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MySQL57Dialect
-2019-11-08 19:18:04.225  INFO 30440 --- [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
-2019-11-08 19:18:04.228  INFO 30440 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
-2019-11-08 19:18:05.593  WARN 30440 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2019-11-08 19:18:05.935  INFO 30440 --- [restartedMain] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
-2019-11-08 19:18:06.076  INFO 30440 --- [restartedMain] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
-2019-11-08 19:18:07.295  INFO 30440 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
-2019-11-08 19:18:07.436  INFO 30440 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8887 (http) with context path ''
-2019-11-08 19:18:07.561  INFO 30440 --- [restartedMain] l.m.c.community.CommunityApplication     : Started CommunityApplication in 10.714 seconds (JVM running for 460.897)
-2019-11-08 19:18:07.576  INFO 30440 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2019-11-11 14:16:13.197  INFO 12840 --- [restartedMain] l.m.c.community.CommunityApplication     : Starting CommunityApplication on PC-20190309UXKJ with PID 12840 (C:\Users\Administrator\IdeaProjects\community\target\classes started by Administrator in C:\Users\Administrator\IdeaProjects\community)
+2019-11-11 14:16:13.266  INFO 12840 --- [restartedMain] l.m.c.community.CommunityApplication     : No active profile set, falling back to default profiles: default
+2019-11-11 14:16:14.854  INFO 12840 --- [restartedMain] o.s.b.devtools.restart.ChangeableUrls    : The Class-Path manifest attribute in C:\Users\Administrator\.m2\repository\org\glassfish\jaxb\jaxb-runtime\2.3.2\jaxb-runtime-2.3.2.jar referenced one or more files that do not exist: file:/C:/Users/Administrator/.m2/repository/org/glassfish/jaxb/jaxb-runtime/2.3.2/jakarta.xml.bind-api-2.3.2.jar,file:/C:/Users/Administrator/.m2/repository/org/glassfish/jaxb/jaxb-runtime/2.3.2/txw2-2.3.2.jar,file:/C:/Users/Administrator/.m2/repository/org/glassfish/jaxb/jaxb-runtime/2.3.2/istack-commons-runtime-3.0.8.jar,file:/C:/Users/Administrator/.m2/repository/org/glassfish/jaxb/jaxb-runtime/2.3.2/stax-ex-1.8.1.jar,file:/C:/Users/Administrator/.m2/repository/org/glassfish/jaxb/jaxb-runtime/2.3.2/FastInfoset-1.2.16.jar,file:/C:/Users/Administrator/.m2/repository/org/glassfish/jaxb/jaxb-runtime/2.3.2/jakarta.activation-api-1.2.1.jar
+2019-11-11 14:16:14.857  INFO 12840 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2019-11-11 14:16:14.866  INFO 12840 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2019-11-11 14:16:25.031  INFO 12840 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data repositories in DEFAULT mode.
+2019-11-11 14:16:25.257  INFO 12840 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 165ms. Found 0 repository interfaces.
+2019-11-11 14:16:27.635  INFO 12840 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-11-11 14:16:33.583  INFO 12840 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8887 (http)
+2019-11-11 14:16:33.663  INFO 12840 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2019-11-11 14:16:33.665  INFO 12840 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.22]
+2019-11-11 14:16:34.274  INFO 12840 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2019-11-11 14:16:34.275  INFO 12840 --- [restartedMain] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 19407 ms
+2019-11-11 14:16:35.675  INFO 12840 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2019-11-11 14:16:41.647  INFO 12840 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2019-11-11 14:16:43.296  INFO 12840 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2019-11-11 14:16:47.002  INFO 12840 --- [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate Core {5.4.4.Final}
+2019-11-11 14:16:49.800  INFO 12840 --- [restartedMain] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
+2019-11-11 14:16:51.536  INFO 12840 --- [restartedMain] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MySQL55Dialect
+2019-11-11 14:16:53.913  INFO 12840 --- [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2019-11-11 14:16:53.927  INFO 12840 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2019-11-11 14:17:00.296  WARN 12840 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2019-11-11 14:17:01.419  INFO 12840 --- [restartedMain] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2019-11-11 14:17:02.096  INFO 12840 --- [restartedMain] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
+2019-11-11 14:17:05.955  INFO 12840 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2019-11-11 14:17:06.434  INFO 12840 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8887 (http) with context path ''
+2019-11-11 14:17:06.543  INFO 12840 --- [restartedMain] l.m.c.community.CommunityApplication     : Started CommunityApplication in 56.58 seconds (JVM running for 62.142)
+2019-11-11 14:17:19.848  INFO 12840 --- [http-nio-8887-exec-2] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2019-11-11 14:17:19.863  INFO 12840 --- [http-nio-8887-exec-2] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2019-11-11 14:17:19.921  INFO 12840 --- [http-nio-8887-exec-2] o.s.web.servlet.DispatcherServlet        : Completed initialization in 54 ms
+2019-11-11 14:17:21.845 DEBUG 12840 --- [http-nio-8887-exec-2] l.m.c.c.m.Q.countBySearch                : ==>  Preparing: select count(*) from question 
+2019-11-11 14:17:22.043 DEBUG 12840 --- [http-nio-8887-exec-2] l.m.c.c.m.Q.countBySearch                : ==> Parameters: 
+2019-11-11 14:17:22.437 DEBUG 12840 --- [http-nio-8887-exec-2] l.m.c.c.m.Q.countBySearch                : <==      Total: 1
+2019-11-11 14:17:22.504 DEBUG 12840 --- [http-nio-8887-exec-2] l.m.c.c.m.Q.selectBySearch               : ==>  Preparing: select * from question order by gmt_create desc limit ?,? 
+2019-11-11 14:17:22.508 DEBUG 12840 --- [http-nio-8887-exec-2] l.m.c.c.m.Q.selectBySearch               : ==> Parameters: 0(Integer), 5(Integer)
+2019-11-11 14:17:22.601 DEBUG 12840 --- [http-nio-8887-exec-2] l.m.c.c.m.Q.selectBySearch               : <==      Total: 5
+2019-11-11 14:17:22.604 DEBUG 12840 --- [http-nio-8887-exec-2] l.m.c.c.m.UserMapper.selectByPrimaryKey  : ==>  Preparing: select id, accunt_id, name, token, gmt_create, gmt_modified, bio, avatar_url from user where id = ? 
+2019-11-11 14:17:22.607 DEBUG 12840 --- [http-nio-8887-exec-2] l.m.c.c.m.UserMapper.selectByPrimaryKey  : ==> Parameters: 24(Long)
+2019-11-11 14:17:22.666 DEBUG 12840 --- [http-nio-8887-exec-2] l.m.c.c.m.UserMapper.selectByPrimaryKey  : <==      Total: 1
+2019-11-11 14:17:22.699 DEBUG 12840 --- [http-nio-8887-exec-2] l.m.c.c.m.UserMapper.selectByPrimaryKey  : ==>  Preparing: select id, accunt_id, name, token, gmt_create, gmt_modified, bio, avatar_url from user where id = ? 
+2019-11-11 14:17:22.701 DEBUG 12840 --- [http-nio-8887-exec-2] l.m.c.c.m.UserMapper.selectByPrimaryKey  : ==> Parameters: 24(Long)
+2019-11-11 14:17:22.775 DEBUG 12840 --- [http-nio-8887-exec-2] l.m.c.c.m.UserMapper.selectByPrimaryKey  : <==      Total: 1
+2019-11-11 14:17:22.778 DEBUG 12840 --- [http-nio-8887-exec-2] l.m.c.c.m.UserMapper.selectByPrimaryKey  : ==>  Preparing: select id, accunt_id, name, token, gmt_create, gmt_modified, bio, avatar_url from user where id = ? 
+2019-11-11 14:17:22.779 DEBUG 12840 --- [http-nio-8887-exec-2] l.m.c.c.m.UserMapper.selectByPrimaryKey  : ==> Parameters: 24(Long)
+2019-11-11 14:17:22.822 DEBUG 12840 --- [http-nio-8887-exec-2] l.m.c.c.m.UserMapper.selectByPrimaryKey  : <==      Total: 1
+2019-11-11 14:17:22.825 DEBUG 12840 --- [http-nio-8887-exec-2] l.m.c.c.m.UserMapper.selectByPrimaryKey  : ==>  Preparing: select id, accunt_id, name, token, gmt_create, gmt_modified, bio, avatar_url from user where id = ? 
+2019-11-11 14:17:22.827 DEBUG 12840 --- [http-nio-8887-exec-2] l.m.c.c.m.UserMapper.selectByPrimaryKey  : ==> Parameters: 24(Long)
+2019-11-11 14:17:22.875 DEBUG 12840 --- [http-nio-8887-exec-2] l.m.c.c.m.UserMapper.selectByPrimaryKey  : <==      Total: 1
+2019-11-11 14:17:22.877 DEBUG 12840 --- [http-nio-8887-exec-2] l.m.c.c.m.UserMapper.selectByPrimaryKey  : ==>  Preparing: select id, accunt_id, name, token, gmt_create, gmt_modified, bio, avatar_url from user where id = ? 
+2019-11-11 14:17:22.879 DEBUG 12840 --- [http-nio-8887-exec-2] l.m.c.c.m.UserMapper.selectByPrimaryKey  : ==> Parameters: 24(Long)
+2019-11-11 14:17:22.923 DEBUG 12840 --- [http-nio-8887-exec-2] l.m.c.c.m.UserMapper.selectByPrimaryKey  : <==      Total: 1
